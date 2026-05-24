@@ -1,11 +1,15 @@
 {
   "trip": {
     "destination": "",
+    "destinationEn": "",
     "dayCount": 0,
     "dateRange": "",
     "travelers": "",
     "style": "",
     "baseArea": "",
+    "weather": "",
+    "budgetEstimate": "",
+    "heroImage": "",
     "assumptions": []
   },
   "sources": [
@@ -33,6 +37,8 @@
       "tags": [],
       "reason": "",
       "tips": [],
+      "cost": "",
+      "imageUrl": "",
       "mapLinks": {
         "amap": "",
         "baidu": ""
@@ -57,6 +63,8 @@
       "dayNumber": 1,
       "title": "",
       "summary": "",
+      "budgetEstimate": "",
+      "backup": "",
       "items": [
         {
           "id": "day-1-item-1",
@@ -64,6 +72,8 @@
           "title": "",
           "placeId": "place-001",
           "duration": "",
+          "cost": "",
+          "imageUrl": "",
           "transportToNext": "",
           "sourceIds": ["xhs-001"],
           "notes": [],

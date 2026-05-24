@@ -27,6 +27,10 @@ Recommended:
 - `travelers`: traveler count and profile.
 - `style`: food, family, citywalk, photography, museum, relaxed, budget, luxury, etc.
 - `baseArea`: hotel or preferred area.
+- `destinationEn` or `englishName`: short English/script subtitle for the mobile hero.
+- `heroImage` or `coverImage`: remote image URL for the top hero.
+- `weather` or `weatherText`: short display text, such as `26°C` or `多云 26°C`.
+- `budgetEstimate` or `budget`: trip-level budget display string.
 - `assumptions[]`: assumptions made because the user or sources did not specify details.
 
 ## `sources[]`
@@ -66,6 +70,8 @@ Recommended:
 - `tags[]`
 - `reason`
 - `tips[]`
+- `imageUrl` or `image`: remote image URL for route cards.
+- `cost`: short display string such as `人均 ¥90`.
 - `mapLinks`: `{ "amap": string, "baidu": string }`
 
 Deduplicate by normalized `name + city + area`. Preserve branch names when they change the visitor experience.
@@ -109,9 +115,17 @@ Recommended per item:
 - `duration`
 - `transportToNext`
 - `mapLinks`
+- `imageUrl` or `image`
+- `cost`
 - `notes[]`
 - `warningIds[]`
 - `alternatives[]`
+
+Recommended per day:
+
+- `summary`
+- `budgetEstimate` or `budget`
+- `backup`: rainy-day or queue-heavy alternative plan.
 
 ## Map Links
 
