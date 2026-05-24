@@ -1,0 +1,7 @@
+interface:
+  display_name: "XHS Travel Planner"
+  short_description: "Build source-backed XHS trip planners"
+  default_prompt: "Use $xhs-travel-planner to research Xiaohongshu notes and generate a mobile interactive travel itinerary."
+
+policy:
+  allow_implicit_invocation: true

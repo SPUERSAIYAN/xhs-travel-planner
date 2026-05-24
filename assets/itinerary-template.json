@@ -1,0 +1,75 @@
+{
+  "trip": {
+    "destination": "",
+    "dayCount": 0,
+    "dateRange": "",
+    "travelers": "",
+    "style": "",
+    "baseArea": "",
+    "assumptions": []
+  },
+  "sources": [
+    {
+      "id": "xhs-001",
+      "platform": "xhs",
+      "url": "",
+      "title": "",
+      "author": "",
+      "publishedDate": "",
+      "capturedAt": "",
+      "excerpt": ""
+    }
+  ],
+  "places": [
+    {
+      "id": "place-001",
+      "name": "",
+      "city": "",
+      "area": "",
+      "address": "",
+      "category": "restaurant",
+      "confidence": "confirmed",
+      "sourceIds": ["xhs-001"],
+      "tags": [],
+      "reason": "",
+      "tips": [],
+      "mapLinks": {
+        "amap": "",
+        "baidu": ""
+      }
+    }
+  ],
+  "warnings": [
+    {
+      "id": "warn-001",
+      "title": "",
+      "severity": "medium",
+      "category": "queue",
+      "placeId": "place-001",
+      "sourceIds": ["xhs-001"],
+      "detail": "",
+      "mitigation": ""
+    }
+  ],
+  "days": [
+    {
+      "id": "day-1",
+      "dayNumber": 1,
+      "title": "",
+      "summary": "",
+      "items": [
+        {
+          "id": "day-1-item-1",
+          "timeBlock": "上午",
+          "title": "",
+          "placeId": "place-001",
+          "duration": "",
+          "transportToNext": "",
+          "sourceIds": ["xhs-001"],
+          "notes": [],
+          "warningIds": []
+        }
+      ]
+    }
+  ]
+}
