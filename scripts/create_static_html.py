@@ -47,102 +47,90 @@ def build_html(data: dict[str, Any]) -> str:
       width: min(100%, 430px);
       min-height: 100vh;
       margin: 0 auto;
-      background: #f8f8f6;
+      background: #fff;
       overflow: hidden;
-      box-shadow: 0 24px 80px rgba(17,24,39,.18);
+      box-shadow: 0 18px 60px rgba(17,24,39,.12);
     }}
     .hero {{
       position: relative;
-      min-height: 310px;
-      padding: 18px 24px 34px;
+      min-height: 224px;
+      padding: 36px 28px 34px;
       color: #fff;
       background:
-        linear-gradient(180deg, rgba(12,22,34,.42), rgba(12,22,34,.22) 45%, rgba(12,22,34,.88)),
+        linear-gradient(90deg, rgba(12,22,34,.76), rgba(12,22,34,.38) 56%, rgba(12,22,34,.22)),
+        linear-gradient(180deg, rgba(12,22,34,.12), rgba(12,22,34,.74)),
         var(--hero-image),
         linear-gradient(135deg, #25364b, #65717e);
       background-size: cover;
       background-position: center;
-      border-bottom-left-radius: 30px;
-      border-bottom-right-radius: 30px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
     }}
     .hero-fallback {{
       --hero-image: radial-gradient(circle at 70% 30%, rgba(255,194,48,.34), transparent 28%),
         linear-gradient(135deg, #1f3348, #76808c);
     }}
-    .status-row, .hero-actions, .chips, .meta, .bottom-actions, .card-actions {{
+    .chips, .meta, .bottom-actions, .card-actions, .route-strip, .save-page {{
       display: flex;
       align-items: center;
     }}
-    .status-row {{ justify-content: space-between; font-weight: 800; font-size: 16px; }}
-    .status-icons {{ letter-spacing: 1px; opacity: .95; }}
-    .hero-actions {{ justify-content: space-between; margin-top: 24px; }}
-    .round-button {{
-      display: grid;
-      width: 44px;
-      height: 44px;
-      place-items: center;
-      border: 0;
-      border-radius: 50%;
-      color: #fff;
-      background: rgba(17,24,39,.52);
-      backdrop-filter: blur(10px);
-      text-decoration: none;
-      font-size: 22px;
-      font-weight: 800;
-    }}
-    .right-actions {{ display: flex; gap: 12px; }}
-    .hero-copy {{ position: relative; z-index: 1; margin-top: 28px; }}
+    .hero-copy {{ position: relative; z-index: 1; }}
     .city-line {{ display: flex; align-items: baseline; gap: 12px; }}
     .city-line h1 {{
       margin: 0;
-      font-size: clamp(3.4rem, 18vw, 5.5rem);
-      line-height: .9;
+      max-width: 13em;
+      font-size: clamp(1.72rem, 8vw, 2.18rem);
+      line-height: 1.08;
       letter-spacing: 0;
       font-weight: 900;
       text-shadow: 0 6px 24px rgba(0,0,0,.28);
     }}
     .script-name {{
-      color: #ffd046;
-      font-family: "Segoe Script", "Bradley Hand ITC", cursive;
-      font-size: 1.2rem;
-      transform: rotate(-6deg);
+      display: none;
     }}
-    .hero-subtitle {{ margin: 14px 0 10px; font-size: 1.55rem; line-height: 1.18; font-weight: 900; }}
-    .meta {{ gap: 9px; color: rgba(255,255,255,.88); font-size: .95rem; }}
-    .chips {{ flex-wrap: wrap; gap: 8px; margin-top: 16px; }}
+    .hero-subtitle {{ display: none; }}
+    .meta {{ gap: 8px; color: rgba(255,255,255,.9); font-size: .94rem; margin-top: 12px; }}
+    .chips {{ flex-wrap: wrap; gap: 8px; margin-top: 14px; }}
     .chip {{
       display: inline-flex;
-      min-height: 34px;
+      min-height: 30px;
       align-items: center;
       gap: 6px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      color: #111827;
-      background: rgba(255,255,255,.84);
+      padding: 6px 11px;
+      border-radius: 10px;
+      color: #fff;
+      background: rgba(37,99,235,.86);
       font-weight: 800;
-      font-size: .88rem;
+      font-size: .84rem;
     }}
-    .weather {{
-      position: absolute;
-      right: 20px;
-      bottom: 34px;
+    .chip:nth-child(1) {{ background: rgba(249,115,22,.9); }}
+    .chip:nth-child(2) {{ background: rgba(124,58,237,.9); }}
+    .chip:nth-child(3) {{ background: rgba(22,163,74,.9); }}
+    .save-page {{
+      margin-top: 14px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      min-height: 40px;
-      padding: 8px 12px;
-      border-radius: 16px;
-      background: rgba(17,24,39,.52);
-      backdrop-filter: blur(12px);
+      gap: 6px;
+      min-height: 34px;
+      padding: 6px 14px;
+      border: 1px solid rgba(255,255,255,.78);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(8px);
       font-weight: 800;
+      font-size: .84rem;
+    }}
+    .weather {{
+      display: none;
     }}
     .sheet {{
       position: relative;
       z-index: 2;
-      margin-top: -24px;
-      padding: 0 16px 22px;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+      margin-top: -8px;
+      padding: 0 20px 24px;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
       background: #fff;
     }}
     .tabs {{
@@ -153,13 +141,12 @@ def build_html(data: dict[str, Any]) -> str:
       grid-auto-flow: column;
       grid-auto-columns: minmax(82px, 1fr);
       gap: 8px;
-      margin: 0 -16px;
-      padding: 16px 16px 10px;
+      margin: 0 -20px;
+      padding: 12px 20px 8px;
       overflow-x: auto;
-      background: rgba(255,255,255,.94);
+      background: rgba(255,255,255,.96);
       backdrop-filter: blur(14px);
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+      border-bottom: 1px solid #eef2f7;
     }}
     .tab {{
       position: relative;
@@ -167,30 +154,30 @@ def build_html(data: dict[str, Any]) -> str:
       border: 0;
       background: transparent;
       color: #7c818c;
-      font-size: 1.08rem;
+      font-size: .96rem;
       font-weight: 800;
     }}
-    .tab.active {{ color: #111827; }}
+    .tab.active {{ color: #216bff; }}
     .tab.active::after {{
       content: "";
       position: absolute;
       left: 50%;
       bottom: 0;
-      width: 34px;
-      height: 4px;
+      width: 78%;
+      height: 2px;
       border-radius: 999px;
-      background: #ffc233;
+      background: #216bff;
       transform: translateX(-50%);
     }}
     .day-panel {{
-      margin-top: 10px;
-      padding: 16px 14px;
-      border: 1px solid #f0ece5;
-      border-radius: 18px;
-      background: #fffaf3;
-      box-shadow: 0 12px 36px rgba(17,24,39,.06);
+      margin-top: 12px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }}
-    .day-heading {{ display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 16px; }}
+    .day-heading {{ display: none; }}
     .day-title {{ min-width: 0; }}
     .day-title h2 {{ margin: 0; font-size: 1.2rem; line-height: 1.25; letter-spacing: 0; }}
     .day-title p {{ margin: 5px 0 0; color: #7c818c; font-size: .86rem; }}
@@ -207,32 +194,49 @@ def build_html(data: dict[str, Any]) -> str:
       box-shadow: inset 0 0 0 1px #f0ece5;
     }}
     .budget strong {{ color: #f59e0b; font-size: 1rem; }}
+    .route-strip {{
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      margin-bottom: 14px;
+      padding: 8px 12px;
+      border: 1px solid #dce6f7;
+      border-radius: 8px;
+      color: #1f2937;
+      background: linear-gradient(180deg, #fff, #f8fbff);
+      font-weight: 800;
+      font-size: .88rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }}
+    .route-strip .pin {{ color: #216bff; font-size: 1.05rem; }}
     .timeline {{ position: relative; display: grid; gap: 14px; }}
     .timeline::before {{
       content: "";
       position: absolute;
-      left: 54px;
+      left: 58px;
       top: 20px;
       bottom: 24px;
-      width: 1px;
-      border-left: 1px dashed #d7dbe2;
+      width: 2px;
+      background: #dbeafe;
     }}
-    .item-row {{ position: relative; display: grid; grid-template-columns: 72px minmax(0,1fr); gap: 12px; align-items: start; }}
+    .item-row {{ position: relative; display: grid; grid-template-columns: 70px minmax(0,1fr); gap: 12px; align-items: start; }}
     .time {{
       position: relative;
       padding-top: 12px;
       font-size: 1rem;
       font-weight: 800;
-      color: #111827;
+      color: #216bff;
     }}
     .time::after {{
       content: "";
       position: absolute;
-      right: 8px;
+      right: 4px;
       top: 18px;
       width: 9px;
       height: 9px;
-      border: 3px solid #ffc233;
+      border: 2px solid #216bff;
       border-radius: 50%;
       background: #fff;
       z-index: 1;
@@ -242,19 +246,19 @@ def build_html(data: dict[str, Any]) -> str:
       display: grid;
       grid-template-columns: 88px minmax(0,1fr) 24px;
       gap: 12px;
-      min-height: 112px;
-      padding: 12px 12px 12px 12px;
+      min-height: 98px;
+      padding: 0 0 0 0;
       border: 0;
-      border-radius: 16px;
+      border-radius: 8px;
       background: #fff;
       color: inherit;
       text-align: left;
-      box-shadow: 0 10px 28px rgba(17,24,39,.08);
+      box-shadow: none;
     }}
     .thumb {{
       width: 88px;
       height: 88px;
-      border-radius: 12px;
+      border-radius: 8px;
       object-fit: cover;
       background:
         linear-gradient(135deg, rgba(255,194,51,.8), rgba(57,84,112,.78)),
@@ -281,11 +285,11 @@ def build_html(data: dict[str, Any]) -> str:
     .card-note {{ margin: 8px 0 0; color: #6b7280; line-height: 1.45; font-size: .92rem; }}
     .check-circle {{
       align-self: start;
-      width: 22px;
-      height: 22px;
-      border: 2px solid #c4c9d1;
-      border-radius: 50%;
-      margin-top: 5px;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #d1d5db;
+      border-radius: 4px;
+      margin-top: 4px;
     }}
     .detail {{
       display: none;
@@ -351,54 +355,75 @@ def build_html(data: dict[str, Any]) -> str:
       bottom: 0;
       z-index: 6;
       display: grid;
-      grid-template-columns: 1fr 1fr 1.35fr;
-      gap: 10px;
-      margin: 18px -16px 0;
-      padding: 14px 16px 16px;
+      grid-template-columns: 1.35fr 1fr 1fr 1fr;
+      gap: 8px;
+      margin: 18px -20px 0;
+      padding: 12px 12px 14px;
       background: rgba(255,255,255,.94);
       backdrop-filter: blur(14px);
       border-top: 1px solid #eef0f4;
     }}
+    .budget-summary {{
+      display: grid;
+      grid-template-columns: 38px minmax(0,1fr);
+      gap: 8px;
+      align-items: center;
+      min-height: 56px;
+      padding: 7px 6px;
+      border: 1px solid #eef0f4;
+      border-radius: 12px;
+      color: #64748b;
+      background: #fff;
+      font-size: .7rem;
+    }}
+    .budget-summary .coin {{
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border-radius: 50%;
+      color: #15803d;
+      background: #dcfce7;
+      font-weight: 900;
+    }}
+    .budget-summary strong {{ display: block; color: #15803d; font-size: 1.05rem; line-height: 1.1; }}
     .bottom-button {{
       display: inline-flex;
-      min-height: 46px;
+      min-height: 56px;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      border-radius: 999px;
+      flex-direction: column;
+      gap: 4px;
+      border-radius: 12px;
       border: 1px solid #e5e7eb;
-      color: #1f2937;
+      color: #334155;
       background: #fff;
       font-weight: 900;
+      font-size: .72rem;
       text-decoration: none;
     }}
-    .bottom-button.primary {{ border-color: #ffc233; background: #ffc233; color: #111827; }}
+    .bottom-button .icon {{ color: #216bff; font-size: 1.1rem; line-height: 1; }}
+    .bottom-button.primary {{ border-color: #e5e7eb; background: #fff; color: #334155; }}
     @media (max-width: 390px) {{
-      .hero {{ padding-left: 18px; padding-right: 18px; }}
-      .city-line h1 {{ font-size: 3rem; }}
+      .hero {{ padding-left: 24px; padding-right: 24px; }}
+      .city-line h1 {{ font-size: 1.68rem; }}
       .plan-card {{ grid-template-columns: 74px minmax(0,1fr) 22px; }}
       .thumb {{ width: 74px; height: 74px; }}
-      .bottom-bar {{ grid-template-columns: 1fr; }}
+      .bottom-bar {{ gap: 6px; }}
+      .budget-summary {{ font-size: .64rem; }}
+      .bottom-button {{ font-size: .66rem; }}
     }}
   </style>
 </head>
 <body>
   <main class="phone">
     <header class="hero hero-fallback" id="hero">
-      <div class="status-row"><span>9:41</span><span class="status-icons">▮▮▮  Wi-Fi  ▱</span></div>
-      <div class="hero-actions">
-        <button class="round-button" type="button" aria-label="返回">‹</button>
-        <div class="right-actions">
-          <button class="round-button" type="button" aria-label="收藏">♡</button>
-          <button class="round-button" type="button" aria-label="分享">↗</button>
-          <button class="round-button" type="button" aria-label="更多">…</button>
-        </div>
-      </div>
       <div class="hero-copy">
         <div class="city-line"><h1 id="city-title"></h1><span class="script-name" id="city-script"></span></div>
         <div class="hero-subtitle" id="hero-subtitle"></div>
         <div class="meta" id="hero-meta"></div>
         <div class="chips" id="hero-chips"></div>
+        <button class="save-page" type="button" id="save-page-top">▱ 保存页面</button>
       </div>
       <div class="weather" id="weather-pill"></div>
     </header>
@@ -406,13 +431,15 @@ def build_html(data: dict[str, Any]) -> str:
       <nav class="tabs" id="tabs" aria-label="每日路线"></nav>
       <section class="day-panel" id="day-panel"></section>
       <section class="rainy-box" id="backup-panel"></section>
+      <section class="section-panel" id="budget-panel"></section>
       <section class="section-panel" id="warnings-panel"></section>
       <section class="section-panel" id="assumptions-panel"></section>
       <section class="section-panel" id="sources-panel"></section>
       <nav class="bottom-bar">
-        <button class="bottom-button" type="button" data-scroll="warnings-panel">￥ 查看避坑</button>
-        <button class="bottom-button" type="button" id="today-map">▮ 今日地图</button>
-        <button class="bottom-button primary" type="button" id="share-plan">↗ 分享行程</button>
+        <div class="budget-summary" id="budget-summary"><span class="coin">￥</span><span><small>预算总计</small><strong>待估算</strong><small>不含往返交通</small></span></div>
+        <button class="bottom-button" type="button" data-scroll="budget-panel"><span class="icon">▥</span>查看预算</button>
+        <button class="bottom-button" type="button" id="today-map"><span class="icon">▮</span>今日地图</button>
+        <button class="bottom-button primary" type="button" id="save-plan-bottom"><span class="icon">▱</span>保存行程</button>
       </nav>
     </section>
   </main>
@@ -445,12 +472,13 @@ def build_html(data: dict[str, Any]) -> str:
     }}
     function renderHero() {{
       const trip = itinerary.trip;
-      $('city-title').textContent = trip.destination || '旅行';
+      const days = trip.dayCount || itinerary.days.length || 1;
+      const nights = first(trip.nightCount, trip.nights, Math.max(days - 1, 0));
+      $('city-title').textContent = trip.title || `${{trip.destination || '旅行'}} ${{days}}天${{nights}}晚旅行计划`;
       $('city-script').textContent = trip.destinationEn || trip.englishName || 'Travel';
-      $('hero-subtitle').textContent = `${{trip.destination || '目的地'}} ${{trip.dayCount || itinerary.days.length}} 天旅行计划`;
       $('hero-meta').innerHTML = [displayRange(), trip.travelers, trip.baseArea && '住 ' + trip.baseArea].filter(Boolean).map(item => `<span>${{escapeHtml(item)}}</span>`).join('<span>·</span>');
       const styleText = String(trip.style || '轻松路线');
-      const chips = unique(['🍴 美食', styleText.includes('拍') ? '📷 拍照' : '📍 打卡', styleText.includes('轻松') ? '🍃 轻松路线' : '🗺️ 顺路路线']);
+      const chips = unique(['美食', styleText.includes('拍') ? '拍照' : '打卡', styleText.includes('轻松') ? '轻松路线' : '顺路路线']);
       $('hero-chips').innerHTML = chips.map(chip => `<span class="chip">${{escapeHtml(chip)}}</span>`).join('');
       const weather = trip.weather || trip.weatherText || '26°C';
       $('weather-pill').innerHTML = `⛅ <span>${{escapeHtml(weather)}}</span>`;
@@ -478,7 +506,8 @@ def build_html(data: dict[str, Any]) -> str:
     function renderDay() {{
       const day = itinerary.days.find(item => item.id === activeDayId) || itinerary.days[0];
       const budget = first(day.budgetEstimate, day.budget, itinerary.trip.budgetEstimate, itinerary.trip.budget);
-      $('day-panel').innerHTML = `<div class="day-heading"><div class="day-title"><h2>▣ Day ${{day.dayNumber}} · ${{escapeHtml(day.title)}}</h2><p>${{escapeHtml(day.summary || '按顺路性安排今日路线')}}</p></div>${{budget ? `<div class="budget">💰 预算小计 <strong>${{escapeHtml(budget)}}</strong></div>` : ''}}</div><div class="timeline">${{day.items.map((item) => {{
+      const routeNames = day.items.map(item => item.title).filter(Boolean).slice(0, 4).join(' → ');
+      $('day-panel').innerHTML = `<div class="day-heading"><div class="day-title"><h2>Day ${{day.dayNumber}} · ${{escapeHtml(day.title)}}</h2><p>${{escapeHtml(day.summary || '按顺路性安排今日路线')}}</p></div>${{budget ? `<div class="budget">预算小计 <strong>${{escapeHtml(budget)}}</strong></div>` : ''}}</div><div class="route-strip"><span class="pin">⌖</span><span>${{escapeHtml(routeNames || day.title || '今日路线')}}</span></div><div class="timeline">${{day.items.map((item) => {{
         const place = item.placeId ? places.get(item.placeId) : null;
         const ids = unique([...(item.sourceIds || []), ...((place && place.sourceIds) || [])]);
         const links = (place && place.mapLinks) || item.mapLinks;
@@ -502,6 +531,11 @@ def build_html(data: dict[str, Any]) -> str:
     function renderWarnings() {{
       $('warnings-panel').innerHTML = `<h2>避坑提醒</h2>${{itinerary.warnings.map(warning => `<div class="warning-box"><strong>${{escapeHtml(warning.title)}}</strong><p>${{escapeHtml(warning.detail || '')}}</p>${{warning.mitigation ? `<p>建议：${{escapeHtml(warning.mitigation)}}</p>` : ''}}</div>`).join('')}}`;
     }}
+    function renderBudget() {{
+      const dayBudgets = itinerary.days.map(day => `<p><strong>Day ${{day.dayNumber}}</strong>：${{escapeHtml(day.budgetEstimate || day.budget || '待估算')}}</p>`).join('');
+      const totalBudget = first(itinerary.trip.budgetEstimate, itinerary.trip.budget, '待估算');
+      $('budget-panel').innerHTML = `<h2>预算明细</h2><p><strong>总预算：</strong>${{escapeHtml(totalBudget)}}</p>${{dayBudgets}}<p class="muted">预算用于行程参考，实际价格以现场、预约平台或菜单为准。</p>`;
+    }}
     function renderAssumptions() {{
       $('assumptions-panel').innerHTML = `<h2>数据边界</h2>${{(itinerary.trip.assumptions || []).map(item => `<p>${{escapeHtml(item)}}</p>`).join('')}}`;
     }}
@@ -510,16 +544,28 @@ def build_html(data: dict[str, Any]) -> str:
     }}
     function wireBottomBar() {{
       document.querySelectorAll('[data-scroll]').forEach(button => button.addEventListener('click', () => document.getElementById(button.dataset.scroll).scrollIntoView({{behavior:'smooth'}})));
-      $('share-plan').onclick = async () => {{
-        if (navigator.share) await navigator.share({{title: document.title, url: location.href}});
-        else navigator.clipboard?.writeText(location.href);
-      }};
+      const totalBudget = first(itinerary.trip.budgetEstimate, itinerary.trip.budget, itinerary.days.map(day => day.budgetEstimate || day.budget).filter(Boolean).join(' / '));
+      $('budget-summary').innerHTML = `<span class="coin">￥</span><span><small>预算总计</small><strong>${{escapeHtml(totalBudget || '待估算')}}</strong><small>不含往返交通</small></span>`;
+      $('save-page-top').onclick = downloadPage;
+      $('save-plan-bottom').onclick = downloadPage;
+    }}
+    function downloadPage() {{
+      const html = '<!doctype html>\\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html], {{type: 'text/html;charset=utf-8'}});
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'travel-plan.html';
+      document.body.appendChild(link);
+      link.click();
+      URL.revokeObjectURL(link.href);
+      link.remove();
     }}
     function render() {{
       renderHero();
       renderTabs();
       renderDay();
       renderBackup();
+      renderBudget();
       renderWarnings();
       renderAssumptions();
       renderSources();
