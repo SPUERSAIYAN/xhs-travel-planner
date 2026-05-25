@@ -4,7 +4,38 @@
 
 它会引导 Codex 先使用用户已登录的小红书浏览器会话采集真实笔记，提取地点、餐厅与避坑信息，再按顺路性整理每日路线，最终生成可直接部署到 GitHub Pages 的单文件 `travel-plan.html`。
 
-## npx 安装
+## 安装
+
+### 方式一：一行命令（推荐，跨 runtime）
+
+打开你正在使用的 agent，例如 Claude Code、Codex、Cursor、OpenClaw、Hermes、CodeBuddy、WorkBuddy、Gemini CLI、OpenCode 等，然后告诉它：
+
+```text
+帮我安装这个 skill：https://github.com/SPUERSAIYAN/xhs-travel-planner
+```
+
+或者使用通用 CLI 安装器 [vercel-labs/skills](https://github.com/vercel-labs/skills)，它支持 Codex、Claude Code、Cursor 等 55+ agent runtime：
+
+```bash
+npx skills add SPUERSAIYAN/xhs-travel-planner
+```
+
+CLI 会识别可用的 agent 并将 skill 安装到相应目录。需要明确指定 agent 时使用 `-a`：
+
+```bash
+npx skills add SPUERSAIYAN/xhs-travel-planner -a codex
+npx skills add SPUERSAIYAN/xhs-travel-planner -a claude-code
+npx skills add SPUERSAIYAN/xhs-travel-planner -a cursor
+npx skills add SPUERSAIYAN/xhs-travel-planner -a openclaw
+```
+
+如需安装到用户级全局目录，附加 `-g`：
+
+```bash
+npx skills add SPUERSAIYAN/xhs-travel-planner -g -a codex
+```
+
+### 方式二：项目内置安装器（Codex）
 
 当前仓库可直接通过 GitHub 使用 `npx` 安装到 Codex：
 
