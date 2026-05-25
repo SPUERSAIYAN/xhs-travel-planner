@@ -31,6 +31,15 @@ Combine destination with intent-specific terms:
 
 For multi-day trips, search both the full trip and individual neighborhoods/attractions.
 
+## Coverage And Sampling
+
+- Open and retain at least 8 notes for a one-day/narrow brief, 15 notes for a 2-4 day trip, and 20 notes for trips of 5 days or more.
+- Use at least five distinct query intents for a multi-day plan: route, food, avoid-pit, logistics, and a key area/attraction. Add restaurant or night-market searches for food-first briefs.
+- Browse beyond the first few cards when results are repetitive or promotional. Deduplicate repost-like or near-identical recommendations.
+- Prefer notes whose visible engagement is strong relative to the other results returned for the same query. Likes and saves are useful selection signals; comments can reveal current queue, closure, or branch issues.
+- Do not treat engagement as truth. Cross-check heavily liked recommendations against other independent notes, especially for price, queue, closures, reservations, and "避坑" claims.
+- If fewer notes are accessible because of verification, limited results, or user-supplied links only, record the limitation instead of silently lowering the standard.
+
 ## Source Capture
 
 Create one `sources[]` item per 小红书 note opened or verified in the logged-in browser session. Capture what is available:
@@ -43,13 +52,18 @@ Create one `sources[]` item per 小红书 note opened or verified in the logged-
 - `publishedDate`
 - `capturedAt`
 - `excerpt`: short paraphrase or copied snippet allowed by the user
+- `likes`: visible like count, as a number or visible display string
+- `collects`: visible save/favorite count, as a number or visible display string
+- `comments`: visible comment count, as a number or visible display string
+- `query`: search phrase that surfaced this note
 
-Do not invent missing URLs, authors, dates, or note titles. Use `null` for unknown fields.
+Do not invent missing URLs, authors, dates, note titles, or engagement numbers. Use `null` for unknown fields. A retained source must be an opened/verified real note, not an AI-written summary or a result card that could not be opened.
 
 ## Credibility Checks
 
 Prefer notes that include:
 
+- Visible higher likes/saves among comparable search results, while still checking substance.
 - Specific place names, branches, or addresses.
 - Recent dates or comments that match the trip season.
 - Photos, receipts, route screenshots, or concrete timing details.
@@ -57,6 +71,7 @@ Prefer notes that include:
 
 Treat these as weaker:
 
+- High engagement but no usable visit detail or clear place identification.
 - Pure listicles with no visit detail.
 - Reposts, generic influencer roundups, or suspiciously promotional wording.
 - Notes that name a place but provide no reason, address, branch, or context.
@@ -83,3 +98,12 @@ Use:
 - `assumption`: created by reasoning rather than directly stated by a source.
 
 The final app may show candidates, but it must visually separate them from confirmed route items.
+
+## Completion Check
+
+Before itinerary generation:
+
+- Count retained, opened sources against the minimum for the trip length.
+- Check that high-importance route items are supported by more than one independent note when available.
+- Check that visible engagement was captured for notes where the page displayed it.
+- Report access limitations or missing engagement fields rather than filling them in.

@@ -48,8 +48,12 @@ Recommended:
 - `publishedDate`
 - `capturedAt`
 - `excerpt`
+- `query`: query phrase used to discover the note.
+- `likes`: visible like count when shown.
+- `collects`: visible save/favorite count when shown.
+- `comments`: visible comment count when shown.
 
-Every source should have either `url` or `title`; otherwise it is too hard to audit.
+Every source should have either `url` or `title`; otherwise it is too hard to audit. For multi-day plans, retain at least 15 opened sources for 2-4 days and 20 for 5+ days, unless access limitations are recorded. Engagement fields are observation-only: do not infer or fabricate unavailable counts.
 
 ## `places[]`
 

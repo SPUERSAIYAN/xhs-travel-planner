@@ -11,7 +11,7 @@ Use this skill to produce a source-backed, phone-friendly travel planner from re
 
 1. Confirm the brief only when missing details block the itinerary: destination, dates or trip length, travelers, travel style, must-go places, budget, pace, and hotel/base area if known.
 2. Before searching, open a browser to 小红书 and require the user to scan-code login in that browser session. Prefer `python scripts/open_xhs_login.py --keyword "<destination> 美食 避坑"` when a local browser is available. Do not accept account passwords, Cookie strings, or verification codes.
-3. Gather 小红书 notes only from the logged-in browser session. Do not use non-XHS web sources as itinerary evidence.
+3. Gather real 小红书 notes only from the logged-in browser session. Open each retained note and record its traceable source metadata; do not use non-XHS web sources or unreadable search snippets as itinerary evidence.
 4. Do not bypass CAPTCHA, rate limits, robots controls, paywalls, or platform access restrictions. If the site asks for verification, ask the user to complete it in the browser.
 5. Keep source traceability. Every place, restaurant, route tip, and warning must link back to one or more source records whenever possible.
 6. Extract and deduplicate places, restaurants, shops, neighborhoods, transport tips, reservation notes, opening-hour risks, queue warnings, price warnings, and "avoid" advice.
@@ -33,8 +33,11 @@ Read `references/xhs-research-workflow.md` before collecting notes. Use it for q
 
 Minimum source standard:
 
-- Prefer at least 8-15 relevant notes for a multi-day trip, or fewer only when the user provides a narrow source set.
-- Record `id`, `platform`, `url`, `title`, `author`, `publishedDate`, and `capturedAt` when available.
+- Collect at least 8 opened notes for a one-day/narrow brief, 15 for a 2-4 day itinerary, and 20 for trips of 5 or more days. Only use fewer when the user supplied a fixed small source set or access is blocked; state that limitation.
+- Run several intent searches (route, food, avoid-pit, logistics, and key neighborhoods/attractions). Do not build the itinerary from a single result page.
+- Prioritize notes with visibly high engagement in the search results or opened note, especially likes and saves, while retaining useful lower-engagement notes for specific warnings or niche locations.
+- Record `id`, `platform`, `url`, `title`, `author`, `publishedDate`, `capturedAt`, and visible `likes`, `collects`, `comments` when available. Never invent hidden or unreadable counts.
+- Aim for multiple independent notes supporting important recommendations; a popular single note is not sufficient evidence by itself.
 - Mark recommendations as `confirmed` only when the source is specific enough to identify the place and reason.
 - Mark vague mentions, uncertain names, or unsourced AI inferences as `candidate`.
 - Preserve negative advice as `warnings`; do not bury it inside attraction notes.

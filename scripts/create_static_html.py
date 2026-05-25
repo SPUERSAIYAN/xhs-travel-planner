@@ -159,13 +159,21 @@ def build_html(data: dict[str, Any]) -> str:
         function sourceHtml(sourceIds) {
             const listed = uniq(sourceIds).map(id => sources.get(id)).filter(Boolean);
             if (!listed.length) return '<p class="text-[11px] text-amber-600 mt-2">暂无可读来源，此项仅作候选参考。</p>';
-            return listed.map(source => `
+            return listed.map(source => {
+                const engagement = [
+                    source.likes !== undefined && source.likes !== null && source.likes !== '' ? `赞 ${source.likes}` : '',
+                    source.collects !== undefined && source.collects !== null && source.collects !== '' ? `收藏 ${source.collects}` : '',
+                    source.comments !== undefined && source.comments !== null && source.comments !== '' ? `评论 ${source.comments}` : ''
+                ].filter(Boolean).join(' · ');
+                return `
                 <article class="mt-2 rounded-lg bg-slate-50 p-2 text-[11px] text-slate-500">
                     <strong class="text-slate-700">${esc(source.title || source.id)}</strong>
                     <p>${esc([source.author, source.publishedDate].filter(Boolean).join(' · ') || '来源信息待补')}</p>
+                    ${engagement ? `<p class="mt-1 text-orange-600">${esc(engagement)}</p>` : ''}
                     ${source.excerpt ? `<p class="mt-1">${esc(source.excerpt)}</p>` : ''}
                     ${source.url ? `<a class="mt-1 inline-block font-semibold text-blue-600" href="${esc(source.url)}" target="_blank" rel="noreferrer">打开小红书笔记</a>` : ''}
-                </article>`).join('');
+                </article>`;
+            }).join('');
         }
 
         function detailHtml(item, place) {

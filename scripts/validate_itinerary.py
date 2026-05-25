@@ -53,8 +53,15 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
     if isinstance(trip, dict):
         require(bool(trip.get("destination")), "trip.destination is required", errors)
         require(isinstance(trip.get("dayCount"), int) and trip["dayCount"] > 0, "trip.dayCount must be a positive integer", errors)
+        if isinstance(trip.get("dayCount"), int) and trip["dayCount"] > 0:
+            expected_sources = 8 if trip["dayCount"] == 1 else (15 if trip["dayCount"] <= 4 else 20)
+            if len(sources) < expected_sources:
+                warnings.append(
+                    f"sources has {len(sources)} note(s); prefer at least {expected_sources} opened XHS notes for a {trip['dayCount']}-day trip"
+                )
 
     source_ids: set[str] = set()
+    xhs_sources: list[dict[str, Any]] = []
     for index, source in enumerate(sources):
         prefix = f"sources[{index}]"
         if not isinstance(source, dict):
@@ -65,8 +72,14 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
         require(bool(source.get("platform")), f"{prefix}.platform is required", errors)
         if source_id:
             source_ids.add(source_id)
+        if source.get("platform") == "xhs":
+            xhs_sources.append(source)
         if not source.get("url") and not source.get("title"):
             warnings.append(f"{prefix} should include url or title for auditability")
+    if xhs_sources and not any(
+        source.get(field) not in (None, "") for source in xhs_sources for field in ("likes", "collects", "comments")
+    ):
+        warnings.append("No visible engagement values captured for XHS sources; record likes/collects/comments when shown")
 
     place_ids: set[str] = set()
     place_keys: list[str] = []
