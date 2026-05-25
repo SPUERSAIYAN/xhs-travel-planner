@@ -80,6 +80,13 @@ def validate(data: dict[str, Any]) -> tuple[list[str], list[str]]:
         source.get(field) not in (None, "") for source in xhs_sources for field in ("likes", "collects", "comments")
     ):
         warnings.append("No visible engagement values captured for XHS sources; record likes/collects/comments when shown")
+    sources_without_mobile_url = [
+        source for source in xhs_sources if not source.get("mobileShareUrl") and not source.get("shareUrl")
+    ]
+    if sources_without_mobile_url:
+        warnings.append(
+            f"{len(sources_without_mobile_url)} XHS source(s) lack mobileShareUrl; capture the note share/copy link for reliable phone opening"
+        )
 
     place_ids: set[str] = set()
     place_keys: list[str] = []

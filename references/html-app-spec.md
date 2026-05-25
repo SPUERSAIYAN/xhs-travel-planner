@@ -30,7 +30,8 @@ Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`.
 - Place cards expand/collapse.
 - Map buttons open in a new tab/window.
 - `保存页面` downloads the current HTML in the browser as `travel-plan.html`; do not replace it with an alert.
-- Each place detail shows only its related source citation links to the originating 小红书 notes when URLs exist, with captured likes/saves/comments when visible.
+- Each place detail shows only its related source citation links with captured likes/saves/comments when visible. Use `mobileShareUrl` for the primary `手机打开小红书` button and expose `url`/`desktopUrl` only as `网页备用` when distinct.
+- When no mobile share URL was captured, clearly label the web link `网页打开（手机可能不可用）` instead of presenting it as a guaranteed mobile jump.
 - Do not create a standalone `小红书来源` list or `数据边界` section below the itinerary.
 - Missing map data should show disabled explanatory text, not a broken link.
 

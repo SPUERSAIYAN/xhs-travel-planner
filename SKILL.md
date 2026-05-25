@@ -13,7 +13,7 @@ Use this skill to produce a source-backed, phone-friendly travel planner from re
 2. Before searching, open a browser to 小红书 and require the user to scan-code login in that browser session. Prefer `python scripts/open_xhs_login.py --keyword "<destination> 美食 避坑"` when a local browser is available. Do not accept account passwords, Cookie strings, or verification codes.
 3. Gather real 小红书 notes only from the logged-in browser session. Open each retained note and record its traceable source metadata; do not use non-XHS web sources or unreadable search snippets as itinerary evidence.
 4. Do not bypass CAPTCHA, rate limits, robots controls, paywalls, or platform access restrictions. If the site asks for verification, ask the user to complete it in the browser.
-5. Keep source traceability. Every place, restaurant, route tip, and warning must link back to one or more source records whenever possible.
+5. Keep source traceability. Every place, restaurant, route tip, and warning must link back to one or more source records whenever possible. For each retained XHS note, capture the platform-generated share link for mobile opening when the share UI exposes it; keep the browser page URL as desktop fallback.
 6. Extract and deduplicate places, restaurants, shops, neighborhoods, transport tips, reservation notes, opening-hour risks, queue warnings, price warnings, and "avoid" advice.
 7. Build a day-by-day route by clustering nearby items, checking map search/navigation links, and minimizing backtracking. Use 高德 links first and 百度 links as fallback.
 8. Generate `travel-plan.html` with `scripts/create_static_html.py`.
@@ -36,7 +36,7 @@ Minimum source standard:
 - Collect at least 8 opened notes for a one-day/narrow brief, 15 for a 2-4 day itinerary, and 20 for trips of 5 or more days. Only use fewer when the user supplied a fixed small source set or access is blocked; state that limitation.
 - Run several intent searches (route, food, avoid-pit, logistics, and key neighborhoods/attractions). Do not build the itinerary from a single result page.
 - Prioritize notes with visibly high engagement in the search results or opened note, especially likes and saves, while retaining useful lower-engagement notes for specific warnings or niche locations.
-- Record `id`, `platform`, `url`, `title`, `author`, `publishedDate`, `capturedAt`, and visible `likes`, `collects`, `comments` when available. Never invent hidden or unreadable counts.
+- Record `id`, `platform`, `url`, `mobileShareUrl`, `title`, `author`, `publishedDate`, `capturedAt`, and visible `likes`, `collects`, `comments` when available. `mobileShareUrl` must come from the note's share/copy-link UI, typically an `xhslink.com` link; never construct it from the note ID.
 - Aim for multiple independent notes supporting important recommendations; a popular single note is not sufficient evidence by itself.
 - Mark recommendations as `confirmed` only when the source is specific enough to identify the place and reason.
 - Mark vague mentions, uncertain names, or unsourced AI inferences as `candidate`.
@@ -83,7 +83,7 @@ The HTML page must be mobile-first and include:
 - The Tailwind CDN H5 layout specified in `references/html-app-spec.md`: cover hero, blue day tabs, compact route timeline, and bottom budget summary.
 - A `保存页面` button that downloads the generated HTML in the browser.
 - Expandable place details with 高德 and 百度 map buttons.
-- Source links placed inside each related place detail; do not add a long standalone source list.
+- Source links placed inside each related place detail; use the captured mobile share link as the primary 小红书 button and the browser note URL only as a web fallback. Do not add a long standalone source list.
 - Daily and overall 避坑 information.
 - No standalone `数据边界` section; surface uncertainty only where it affects a place or warning.
 - Empty states for missing addresses, no warnings, and no source URL.
@@ -93,6 +93,7 @@ The HTML page must be mobile-first and include:
 Before final delivery:
 
 - Confirm every non-obvious recommendation has a source ID or is labeled as an assumption/candidate.
+- Confirm retained XHS sources include a platform-generated mobile share link when available; if not, clearly label the webpage link as a mobile-risk fallback.
 - Confirm every displayed map button is generated from name plus city/area/address, or from coordinates when available.
 - Prefer practical route order over "top ranked" order when the two conflict.
 - Explain any unresolved uncertainty: unverified opening hours, possible seasonal closure, unclear branch, or missing exact address.

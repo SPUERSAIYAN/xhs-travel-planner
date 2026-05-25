@@ -47,6 +47,8 @@ Create one `sources[]` item per 小红书 note opened or verified in the logged-
 - `id`: stable local ID, such as `xhs-001`
 - `platform`: `xhs`, `user`, or another explicit source type
 - `url`
+- `mobileShareUrl`: platform-generated share/copy-link URL intended for opening on mobile, usually an `https://xhslink.com/...` URL.
+- `desktopUrl`: optional explicit browser URL when `url` is used for another canonical source URL.
 - `title`
 - `author`
 - `publishedDate`
@@ -57,7 +59,9 @@ Create one `sources[]` item per 小红书 note opened or verified in the logged-
 - `comments`: visible comment count, as a number or visible display string
 - `query`: search phrase that surfaced this note
 
-Do not invent missing URLs, authors, dates, note titles, or engagement numbers. Use `null` for unknown fields. A retained source must be an opened/verified real note, not an AI-written summary or a result card that could not be opened.
+For each retained note, after opening it in the authenticated session, use the note's visible share/copy-link action when available and record the platform-generated URL as `mobileShareUrl`. Do not derive a short link from the note ID or use a third-party converter. Keep the browser address as `url`/`desktopUrl` for audit and PC fallback.
+
+Do not invent missing URLs, authors, dates, note titles, share links, or engagement numbers. Use `null` for unknown fields. A retained source must be an opened/verified real note, not an AI-written summary or a result card that could not be opened.
 
 ## Credibility Checks
 
@@ -106,4 +110,6 @@ Before itinerary generation:
 - Count retained, opened sources against the minimum for the trip length.
 - Check that high-importance route items are supported by more than one independent note when available.
 - Check that visible engagement was captured for notes where the page displayed it.
+- Check that XHS source links intended for mobile use come from the note share action; test at least one generated itinerary source button on a phone before publication when possible.
+- If a note has only a browser `xiaohongshu.com/explore/...` URL and no platform-generated mobile share link, preserve it as web fallback and mark mobile opening as not verified.
 - Report access limitations or missing engagement fields rather than filling them in.

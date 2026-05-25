@@ -165,13 +165,18 @@ def build_html(data: dict[str, Any]) -> str:
                     source.collects !== undefined && source.collects !== null && source.collects !== '' ? `收藏 ${source.collects}` : '',
                     source.comments !== undefined && source.comments !== null && source.comments !== '' ? `评论 ${source.comments}` : ''
                 ].filter(Boolean).join(' · ');
+                const mobileUrl = source.mobileShareUrl || source.shareUrl;
+                const webUrl = source.desktopUrl || source.url;
                 return `
                 <article class="mt-2 rounded-lg bg-slate-50 p-2 text-[11px] text-slate-500">
                     <strong class="text-slate-700">${esc(source.title || source.id)}</strong>
                     <p>${esc([source.author, source.publishedDate].filter(Boolean).join(' · ') || '来源信息待补')}</p>
                     ${engagement ? `<p class="mt-1 text-orange-600">${esc(engagement)}</p>` : ''}
                     ${source.excerpt ? `<p class="mt-1">${esc(source.excerpt)}</p>` : ''}
-                    ${source.url ? `<a class="mt-1 inline-block font-semibold text-blue-600" href="${esc(source.url)}" target="_blank" rel="noreferrer">打开小红书笔记</a>` : ''}
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        ${mobileUrl ? `<a class="inline-block font-semibold text-red-600" href="${esc(mobileUrl)}" target="_blank" rel="noreferrer">手机打开小红书</a>` : ''}
+                        ${webUrl && webUrl !== mobileUrl ? `<a class="inline-block font-semibold text-blue-600" href="${esc(webUrl)}" target="_blank" rel="noreferrer">${mobileUrl ? '网页备用' : '网页打开（手机可能不可用）'}</a>` : ''}
+                    </div>
                 </article>`;
             }).join('');
         }

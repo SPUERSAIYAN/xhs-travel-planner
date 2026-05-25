@@ -48,12 +48,14 @@ Recommended:
 - `publishedDate`
 - `capturedAt`
 - `excerpt`
+- `mobileShareUrl`: platform-generated share/copy-link URL for the mobile button, typically `https://xhslink.com/...`.
+- `desktopUrl`: optional PC browser note URL when distinct from `url`.
 - `query`: query phrase used to discover the note.
 - `likes`: visible like count when shown.
 - `collects`: visible save/favorite count when shown.
 - `comments`: visible comment count when shown.
 
-Every source should have either `url` or `title`; otherwise it is too hard to audit. For multi-day plans, retain at least 15 opened sources for 2-4 days and 20 for 5+ days, unless access limitations are recorded. Engagement fields are observation-only: do not infer or fabricate unavailable counts.
+Every source should have either `url` or `title`; otherwise it is too hard to audit. For XHS mobile output, capture `mobileShareUrl` using the note's own share/copy-link action rather than constructing it. Retain at least 15 opened sources for 2-4 days and 20 for 5+ days, unless access limitations are recorded. Engagement fields are observation-only: do not infer or fabricate unavailable counts.
 
 ## `places[]`
 
