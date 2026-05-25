@@ -80,8 +80,9 @@ The HTML page must be mobile-first and include:
 - The Tailwind CDN H5 layout specified in `references/html-app-spec.md`: cover hero, blue day tabs, compact route timeline, and bottom budget summary.
 - A `保存页面` button that downloads the generated HTML in the browser.
 - Expandable place details with 高德 and 百度 map buttons.
-- Source citations that expose the originating 小红书 notes.
+- Source links placed inside each related place detail; do not add a long standalone source list.
 - Daily and overall 避坑 information.
+- No standalone `数据边界` section; surface uncertainty only where it affects a place or warning.
 - Empty states for missing addresses, no warnings, and no source URL.
 
 ## Quality Bar

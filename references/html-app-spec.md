@@ -9,7 +9,7 @@ Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`.
 - Keep controls thumb-friendly: day tabs, expandable details/map links, source citations, and a sticky bottom budget bar.
 - Do not render fake phone status bars, back buttons, favorite buttons, share circles, or other native-app chrome.
 - Let the user scan the route in order without reading long prose.
-- Make uncertainty visible: candidates, assumptions, and missing address states should be labeled.
+- Make uncertainty concise: label candidate or missing-address items at the related place card, without a separate data-boundary section.
 
 ## Required Views
 
@@ -22,7 +22,6 @@ Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`.
 - Backup card: rainy-day or queue-heavy alternative plan for the active day/trip.
 - Budget detail section.
 - Avoid-pit section: overall warnings and day-specific warnings.
-- Source panel: source title, platform, author/date if available, and link when available.
 - Bottom bar: budget summary and `查看预算明细` button.
 
 ## Interaction Rules
@@ -31,7 +30,8 @@ Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`.
 - Place cards expand/collapse.
 - Map buttons open in a new tab/window.
 - `保存页面` downloads the current HTML in the browser as `travel-plan.html`; do not replace it with an alert.
-- Source citations are visible and remain linked to the originating 小红书 note when a URL exists.
+- Each place detail shows only its related source citation links to the originating 小红书 notes when URLs exist.
+- Do not create a standalone `小红书来源` list or `数据边界` section below the itinerary.
 - Missing map data should show disabled explanatory text, not a broken link.
 
 ## Visual Constraints
@@ -52,6 +52,6 @@ Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`.
 - At 390px width, day tabs, route cards, warning blocks, and map buttons do not overlap.
 - The first viewport shows the hero and the start of the itinerary sheet.
 - Route items look like a timeline: visible times, markers, and cards.
-- Every displayed recommendation has visible source or assumption/candidate labeling.
+- Every displayed recommendation exposes related source links in its expanded detail, or shows a compact candidate label when needed.
 - Every map link uses encoded query text or coordinates.
 - The app remains useful with no warnings, no exact addresses, or sources without URLs.

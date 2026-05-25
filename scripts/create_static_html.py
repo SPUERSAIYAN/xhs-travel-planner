@@ -69,7 +69,6 @@ def build_html(data: dict[str, Any]) -> str:
 
             <nav id="tabs" class="flex border-b text-center text-sm font-medium text-gray-400 sticky top-0 bg-white z-10 shadow-sm shadow-black/5" aria-label="每日路线"></nav>
             <section id="day-content"></section>
-            <section id="sources-panel" class="mx-4 mb-5 rounded-xl border border-slate-100 bg-white p-4"></section>
         </div>
 
         <footer class="border-t bg-white p-4 sticky bottom-0 z-20 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
@@ -232,7 +231,7 @@ def build_html(data: dict[str, Any]) -> str:
                     ${day.items.map(itemHtml).join('') || '<p class="py-8 text-center text-sm text-gray-400">今日暂无详细数据。</p>'}
                 </div>
                 <aside class="mx-4 mb-4 p-3 rounded-xl bg-blue-50 border border-blue-100 text-xs text-slate-600 flex gap-3">
-                    <span class="text-xl">&#127783;</span><div><strong class="text-blue-700">雨天备选</strong><p>${esc(day.backup || itinerary.trip.assumptions?.[0] || '优先调整为室内景点与餐饮路线。')}</p></div>
+                    <span class="text-xl">&#127783;</span><div><strong class="text-blue-700">雨天备选</strong><p>${esc(day.backup || '优先调整为室内景点与餐饮路线。')}</p></div>
                 </aside>
                 ${warnings.length ? `<section class="mx-4 mb-4 rounded-xl border border-orange-100 bg-orange-50 p-3"><h2 class="text-xs font-bold text-orange-700 mb-2">避坑提醒</h2>${warnings.map(warning => `<p class="text-[11px] text-orange-700 mb-1">&#9888; ${esc(warning.title)}：${esc(warning.detail || '')}</p>`).join('')}</section>` : ''}`;
             document.querySelectorAll('.toggle-detail').forEach(button => button.onclick = event => {
@@ -241,10 +240,6 @@ def build_html(data: dict[str, Any]) -> str:
                 panel.toggleAttribute('hidden', !open);
                 event.currentTarget.innerHTML = open ? '收起详情 &#8963;' : '展开详情 &#8964;';
             });
-        }
-
-        function renderSources() {
-            $('sources-panel').innerHTML = `<h2 class="text-sm font-bold text-slate-700 mb-2">小红书来源 · ${itinerary.sources.length} 条</h2>${sourceHtml(itinerary.sources.map(source => source.id))}`;
         }
 
         function renderBudget() {
@@ -280,7 +275,6 @@ def build_html(data: dict[str, Any]) -> str:
         renderHero();
         renderTabs();
         renderDay();
-        renderSources();
         renderBudget();
         wireActions();
     </script>
