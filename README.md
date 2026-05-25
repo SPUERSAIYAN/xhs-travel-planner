@@ -35,40 +35,6 @@ npx skills add SPUERSAIYAN/xhs-travel-planner -a openclaw
 npx skills add SPUERSAIYAN/xhs-travel-planner -g -a codex
 ```
 
-### 方式二：项目内置安装器（Codex）
-
-当前仓库可直接通过 GitHub 使用 `npx` 安装到 Codex：
-
-```bash
-npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install
-```
-
-安装目标默认为：
-
-```text
-$CODEX_HOME/skills/xhs-travel-planner
-```
-
-未设置 `CODEX_HOME` 时，会安装到 `~/.codex/skills/xhs-travel-planner`。安装完成后请重启 Codex 以加载新 skill。
-
-如果该 skill 已存在，安装器会停止而不是直接覆盖。需要更新现有安装时显式使用：
-
-```bash
-npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install --force
-```
-
-也可以指定 skills 父目录进行本地测试或自定义安装：
-
-```bash
-npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install --dest ./my-skills
-```
-
-当本项目发布至 npm registry 后，也可使用短命令：
-
-```bash
-npx --yes xhs-travel-planner install
-```
-
 ## 能做什么
 
 - 强制先打开小红书，由用户扫码登录后再开始调研。
@@ -138,69 +104,7 @@ npx --yes xhs-travel-planner install
 
 ## 输出页面
 
-生成的 `travel-plan.html` 是一个可部署的 H5 单页面，包含：
 
-- 深色封面 Hero、旅行标题、日期、人数和风格标签。
-- 按天切换的路线 Tab 与当天路线概览。
-- 时间轴形式的地点/餐厅卡片。
-- 展开详情中的推荐理由、避坑提示、地图按钮及对应小红书来源。
-- `手机打开小红书` 按钮，优先使用采集到的 `mobileShareUrl`。
-- 底部预算总计与预算明细弹层。
-- 顶部 `保存页面` 按钮，可在浏览器中下载当前 HTML。
-
-页面不包含冗长的全局来源列表或「数据边界」段落；不确定信息只在对应地点或风险提示中展示。
-
-## 目录结构
-
-```text
-xhs-travel-planner/
-├── package.json                     # npm / npx 包配置
-├── bin/
-│   └── xhs-travel-planner.mjs       # npx 安装命令
-├── SKILL.md                         # Skill 主流程与约束
-├── agents/openai.yaml               # Codex 界面元数据
-├── assets/
-│   ├── brief-template.md            # 用户需求填写模板
-│   └── itinerary-template.json      # 行程数据模板
-├── references/
-│   ├── xhs-research-workflow.md     # 小红书调研与筛选规则
-│   ├── itinerary-schema.md          # JSON 数据契约
-│   ├── html-app-spec.md             # H5 页面规范
-│   └── prompt-templates.md          # 可复制提示词
-└── scripts/
-    ├── open_xhs_login.py            # 打开小红书登录/搜索浏览器
-    ├── generate_map_links.py        # 生成高德/百度地图链接
-    ├── validate_itinerary.py        # 校验行程数据与来源质量
-    └── create_static_html.py        # 生成单文件 H5 页面
-```
-
-## 脚本使用
-
-准备好符合 [references/itinerary-schema.md](references/itinerary-schema.md) 的 `itinerary.json` 后：
-
-```bash
-python scripts/generate_map_links.py itinerary.json --write
-python scripts/validate_itinerary.py itinerary.json
-python scripts/create_static_html.py itinerary.json travel-plan.html
-```
-
-打开小红书登录浏览器：
-
-```bash
-python scripts/open_xhs_login.py --keyword "长沙 美食 避坑"
-```
-
-注意：skill 不绕过登录、验证码、访问限制或平台限制，也不要求用户提供密码、Cookie 或验证码。
-
-## 发布 npm 包
-
-仓库已包含 `package.json` 与 `bin/xhs-travel-planner.mjs`，因此从 GitHub 通过 `npx` 安装无需额外发布步骤。若维护者需要启用 `npx xhs-travel-planner install` 短命令，可在确认 npm 包名和账号权限后发布：
-
-```bash
-npm login
-npm pack --dry-run
-npm publish
-```
 
 ## 发布到 GitHub Pages
 
@@ -211,24 +115,3 @@ npm publish
 3. 在仓库 Settings > Pages 中选择对应分支和发布目录。
 4. 使用 GitHub Pages 提供的链接在手机浏览器中打开。
 
-## 数据模型概览
-
-主要数据结构如下：
-
-| 字段 | 用途 |
-| --- | --- |
-| `trip` | 目的地、天数、人数、风格、预算、封面等 |
-| `sources[]` | 小红书笔记来源、互动量及手机分享链接 |
-| `places[]` | 标准化地点/餐厅、理由、标签与地图链接 |
-| `warnings[]` | 排队、预约、闭店、价格、交通等风险 |
-| `days[]` | 每日顺路行程、时间段、备选方案 |
-
-详细定义见 [references/itinerary-schema.md](references/itinerary-schema.md)。
-
-## 边界与合规
-
-- 不提供小红书私有 API 爬虫。
-- 不绕过登录、验证码、频率限制或平台访问控制。
-- 仅使用用户登录后可访问并实际核验过的内容。
-- 看不到的作者、日期、互动数量或分享链接应留空，不得补写或猜测。
-- 推荐热度仅作筛选信号，最终行程仍应以可核验来源和路线可行性为依据。
