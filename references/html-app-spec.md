@@ -1,12 +1,12 @@
 # Mobile H5 Travel Plan Spec
 
-Generate a self-contained `travel-plan.html` with `scripts/create_static_html.py`. The file must work when opened directly, renamed to `index.html`, or uploaded to GitHub Pages.
+Generate one deployable `travel-plan.html` with `scripts/create_static_html.py`. The template uses Tailwind CSS via CDN as in the approved H5 design, and works as `index.html` on GitHub Pages.
 
 ## Required Experience
 
 - Design mobile-first as a polished H5 travel page; desktop should center the same phone-width experience.
 - Open on the itinerary, not a marketing landing page.
-- Keep controls thumb-friendly: day tabs, clear map buttons, expandable source citations, and a sticky bottom action bar.
+- Keep controls thumb-friendly: day tabs, expandable details/map links, source citations, and a sticky bottom budget bar.
 - Do not render fake phone status bars, back buttons, favorite buttons, share circles, or other native-app chrome.
 - Let the user scan the route in order without reading long prose.
 - Make uncertainty visible: candidates, assumptions, and missing address states should be labeled.
@@ -14,7 +14,7 @@ Generate a self-contained `travel-plan.html` with `scripts/create_static_html.py
 ## Required Views
 
 - Immersive H5 hero: cover image, trip title, dates, travelers, style chips, and a `保存页面` button.
-- Flat white itinerary body slightly overlapping the hero.
+- White itinerary body below the hero.
 - Day tabs: one tab per day with a short blue active underline.
 - Route strip: a compact `地点 A -> 地点 B -> 地点 C` summary under the tabs.
 - Daily route timeline: ordered items with time block on the left, dotted vertical line, place card on the right.
@@ -23,21 +23,22 @@ Generate a self-contained `travel-plan.html` with `scripts/create_static_html.py
 - Budget detail section.
 - Avoid-pit section: overall warnings and day-specific warnings.
 - Source panel: source title, platform, author/date if available, and link when available.
-- Bottom action bar: budget summary, view budget, today map, save itinerary.
+- Bottom bar: budget summary and `查看预算明细` button.
 
 ## Interaction Rules
 
 - Day tabs update the visible route without full page reload.
 - Place cards expand/collapse.
 - Map buttons open in a new tab/window.
-- `保存页面` and `保存行程` download the current single-file HTML in the browser as `travel-plan.html`.
-- Source buttons expose citations without hiding the route.
+- `保存页面` downloads the current HTML in the browser as `travel-plan.html`; do not replace it with an alert.
+- Source citations are visible and remain linked to the originating 小红书 note when a URL exists.
 - Missing map data should show disabled explanatory text, not a broken link.
 
 ## Visual Constraints
 
 - Prioritize readable Chinese text on mobile.
 - Use a blue route accent, white cards, muted gray metadata, and small colored category pills.
+- Match the Tailwind H5 template: `max-w-md`, slate background, `h-56` hero, blue active tabs, compact timeline, and green budget summary.
 - Use small H5-like radii for the hero/body/card system; avoid fake iOS status UI.
 - Avoid decorative cards inside cards.
 - Use stable dimensions for tabs, buttons, badges, and timeline markers.

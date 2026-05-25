@@ -77,11 +77,11 @@ To deploy on GitHub Pages, copy or upload `travel-plan.html` as `index.html` in 
 
 The HTML page must be mobile-first and include:
 
-- Sticky trip summary and day tabs.
-- A route timeline for each day.
-- Clickable place cards with 高德 and 百度 map buttons.
+- The Tailwind CDN H5 layout specified in `references/html-app-spec.md`: cover hero, blue day tabs, compact route timeline, and bottom budget summary.
+- A `保存页面` button that downloads the generated HTML in the browser.
+- Expandable place details with 高德 and 百度 map buttons.
 - Source citations that expose the originating 小红书 notes.
-- Daily and overall 避坑 sections.
+- Daily and overall 避坑 information.
 - Empty states for missing addresses, no warnings, and no source URL.
 
 ## Quality Bar
