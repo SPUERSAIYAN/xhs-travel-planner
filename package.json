@@ -1,0 +1,45 @@
+{
+  "name": "xhs-travel-planner",
+  "version": "0.1.0",
+  "description": "Install the xhs-travel-planner Codex skill with npx.",
+  "type": "module",
+  "bin": {
+    "xhs-travel-planner": "bin/xhs-travel-planner.mjs"
+  },
+  "files": [
+    "SKILL.md",
+    "README.md",
+    "agents",
+    "assets",
+    "references",
+    "scripts",
+    "bin"
+  ],
+  "scripts": {
+    "test": "node bin/xhs-travel-planner.mjs --help",
+    "pack:check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "codex",
+    "codex-skill",
+    "xiaohongshu",
+    "travel-planner",
+    "xhs"
+  ],
+  "author": "SPUERSAIYAN",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SPUERSAIYAN/xhs-travel-planner.git"
+  },
+  "homepage": "https://github.com/SPUERSAIYAN/xhs-travel-planner#readme",
+  "bugs": {
+    "url": "https://github.com/SPUERSAIYAN/xhs-travel-planner/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

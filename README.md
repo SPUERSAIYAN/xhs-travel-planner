@@ -4,6 +4,40 @@
 
 它会引导 Codex 先使用用户已登录的小红书浏览器会话采集真实笔记，提取地点、餐厅与避坑信息，再按顺路性整理每日路线，最终生成可直接部署到 GitHub Pages 的单文件 `travel-plan.html`。
 
+## npx 安装
+
+当前仓库可直接通过 GitHub 使用 `npx` 安装到 Codex：
+
+```bash
+npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install
+```
+
+安装目标默认为：
+
+```text
+$CODEX_HOME/skills/xhs-travel-planner
+```
+
+未设置 `CODEX_HOME` 时，会安装到 `~/.codex/skills/xhs-travel-planner`。安装完成后请重启 Codex 以加载新 skill。
+
+如果该 skill 已存在，安装器会停止而不是直接覆盖。需要更新现有安装时显式使用：
+
+```bash
+npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install --force
+```
+
+也可以指定 skills 父目录进行本地测试或自定义安装：
+
+```bash
+npx --yes --package=github:SPUERSAIYAN/xhs-travel-planner xhs-travel-planner install --dest ./my-skills
+```
+
+当本项目发布至 npm registry 后，也可使用短命令：
+
+```bash
+npx --yes xhs-travel-planner install
+```
+
 ## 能做什么
 
 - 强制先打开小红书，由用户扫码登录后再开始调研。
@@ -89,6 +123,9 @@
 
 ```text
 xhs-travel-planner/
+├── package.json                     # npm / npx 包配置
+├── bin/
+│   └── xhs-travel-planner.mjs       # npx 安装命令
 ├── SKILL.md                         # Skill 主流程与约束
 ├── agents/openai.yaml               # Codex 界面元数据
 ├── assets/
@@ -124,6 +161,16 @@ python scripts/open_xhs_login.py --keyword "长沙 美食 避坑"
 
 注意：skill 不绕过登录、验证码、访问限制或平台限制，也不要求用户提供密码、Cookie 或验证码。
 
+## 发布 npm 包
+
+仓库已包含 `package.json` 与 `bin/xhs-travel-planner.mjs`，因此从 GitHub 通过 `npx` 安装无需额外发布步骤。若维护者需要启用 `npx xhs-travel-planner install` 短命令，可在确认 npm 包名和账号权限后发布：
+
+```bash
+npm login
+npm pack --dry-run
+npm publish
+```
+
 ## 发布到 GitHub Pages
 
 将生成的页面作为站点入口发布：
@@ -154,4 +201,3 @@ python scripts/open_xhs_login.py --keyword "长沙 美食 避坑"
 - 仅使用用户登录后可访问并实际核验过的内容。
 - 看不到的作者、日期、互动数量或分享链接应留空，不得补写或猜测。
 - 推荐热度仅作筛选信号，最终行程仍应以可核验来源和路线可行性为依据。
-
