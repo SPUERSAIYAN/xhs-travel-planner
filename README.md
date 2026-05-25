@@ -104,6 +104,8 @@ npx skills add SPUERSAIYAN/xhs-travel-planner -g -a codex
 
 ## 输出页面
 
+<img width="630" height="1368" alt="060f159ccd51477a09c1252711892358" src="https://github.com/user-attachments/assets/f6b3f3a5-f0f4-448f-836c-f89a6045c75c" />
+
 
 
 ## 发布到 GitHub Pages
