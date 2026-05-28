@@ -107,6 +107,71 @@ npx skills add SPUERSAIYAN/xhs-travel-planner -g -a codex
 <img width="630" height="1368" alt="060f159ccd51477a09c1252711892358" src="https://github.com/user-attachments/assets/f6b3f3a5-f0f4-448f-836c-f89a6045c75c" />
 
 
+页面不包含冗长的全局来源列表或「数据边界」段落；不确定信息只在对应地点或风险提示中展示。
+
+## 目录结构
+
+```text
+xhs-travel-planner/
+├── package.json                     # npm / npx 包配置
+├── bin/
+│   └── xhs-travel-planner.mjs       # npx 安装命令
+├── SKILL.md                         # Skill 主流程与约束
+├── agents/openai.yaml               # Codex 界面元数据
+├── assets/
+│   ├── brief-template.md            # 用户需求填写模板
+│   └── itinerary-template.json      # 行程数据模板
+├── references/
+│   ├── xhs-research-workflow.md     # 小红书调研与筛选规则
+│   ├── itinerary-schema.md          # JSON 数据契约
+│   ├── html-app-spec.md             # H5 页面规范
+│   └── prompt-templates.md          # 可复制提示词
+└── scripts/
+    ├── open_xhs_login.py            # 打开小红书登录/搜索浏览器
+    ├── generate_map_links.py        # 生成高德/百度地图链接
+    ├── validate_itinerary.py        # 校验行程数据与来源质量
+    └── create_static_html.py        # 生成单文件 H5 页面
+```
+
+## 脚本使用
+
+准备好符合 [references/itinerary-schema.md](references/itinerary-schema.md) 的 `itinerary.json` 后：
+
+```bash
+python scripts/generate_map_links.py itinerary.json --write
+python scripts/validate_itinerary.py itinerary.json
+python scripts/create_static_html.py itinerary.json travel-plan.html
+```
+
+打开小红书登录浏览器：
+
+```bash
+python scripts/open_xhs_login.py --keyword "长沙 美食 避坑"
+```
+
+默认会复用你平时 Chrome/Edge 的默认 profile，因此如果你日常浏览器已经登录小红书，通常会直接沿用该登录态。要指定某个已有浏览器用户，可使用：
+
+```bash
+python scripts/open_xhs_login.py --keyword "长沙 美食 避坑" --profile-directory "Profile 1"
+```
+
+如果你想使用隔离的干净浏览器 profile，再显式加：
+
+```bash
+python scripts/open_xhs_login.py --keyword "长沙 美食 避坑" --isolated-profile
+```
+
+注意：skill 不绕过登录、验证码、访问限制或平台限制，也不要求用户提供密码、Cookie 或验证码。复用日常 profile 只是在本机打开普通浏览器窗口，不会读取或导出你的 Cookie。
+
+## 发布 npm 包
+
+仓库已包含 `package.json` 与 `bin/xhs-travel-planner.mjs`，因此从 GitHub 通过 `npx` 安装无需额外发布步骤。若维护者需要启用 `npx xhs-travel-planner install` 短命令，可在确认 npm 包名和账号权限后发布：
+
+```bash
+npm login
+npm pack --dry-run
+npm publish
+```
 
 ## 发布到 GitHub Pages
 

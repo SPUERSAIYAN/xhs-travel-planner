@@ -4,8 +4,9 @@ Use this guide when gathering real 小红书/Xiaohongshu/RedNote notes for a tra
 
 ## Mandatory Login Step
 
-- Always begin by opening a browser to 小红书 search or homepage and asking the user to scan-code login.
-- Prefer running `python scripts/open_xhs_login.py --keyword "<destination> 美食 避坑"` to open a dedicated browser profile.
+- Always begin by opening the user's regular Chrome/Edge browser profile to 小红书 search or homepage so the normal login state can be reused.
+- Prefer running `python scripts/open_xhs_login.py --keyword "<destination> 美食 避坑"`. This defaults to the regular/default browser profile and does not pass `--user-data-dir`.
+- If the user wants a clean login container, run the same script with `--isolated-profile`.
 - Continue only after the user confirms the opened browser session is logged in and can display note cards.
 - Never ask for or store account passwords, Cookie strings, local storage values, SMS codes, or CAPTCHA answers.
 - If a verification challenge appears, pause and ask the user to complete it manually in the browser.

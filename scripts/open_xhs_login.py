@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Open Xiaohongshu in a browser so the user can scan-code login."""
+"""Open Xiaohongshu in the user's regular browser profile."""
 
 from __future__ import annotations
 
@@ -27,10 +27,12 @@ def find_browser() -> Path | None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Open Xiaohongshu for user scan-code login.")
+    parser = argparse.ArgumentParser(description="Open Xiaohongshu in the user's regular browser profile.")
     parser.add_argument("--keyword", help="Optional search keyword to open after login, such as '长沙美食 避坑'.")
-    parser.add_argument("--profile-dir", type=Path, default=Path(".xhs-browser-profile"))
-    parser.add_argument("--debug-port", type=int, default=9222)
+    parser.add_argument("--profile-directory", help='Optional existing Chrome/Edge profile name, such as "Default" or "Profile 1".')
+    parser.add_argument("--isolated-profile", action="store_true", help="Use a separate browser profile instead of the regular browser profile.")
+    parser.add_argument("--profile-dir", type=Path, default=Path(".xhs-browser-profile"), help="Directory used only with --isolated-profile.")
+    parser.add_argument("--debug-port", type=int, help="Optional remote debugging port, used only with --isolated-profile.")
     args = parser.parse_args()
 
     url = DEFAULT_URL
@@ -42,21 +44,28 @@ def main() -> int:
         print("ERROR: Chrome or Edge was not found. Open Xiaohongshu manually and scan-code login.", file=sys.stderr)
         return 1
 
-    args.profile_dir.mkdir(parents=True, exist_ok=True)
+    command = [str(browser), "--no-first-run", "--new-window"]
+    if args.isolated_profile:
+        args.profile_dir.mkdir(parents=True, exist_ok=True)
+        command.append(f"--user-data-dir={args.profile_dir.resolve()}")
+        if args.debug_port:
+            command.append(f"--remote-debugging-port={args.debug_port}")
+    elif args.profile_directory:
+        command.append(f"--profile-directory={args.profile_directory}")
+    command.append(url)
+
     subprocess.Popen(
-        [
-            str(browser),
-            f"--remote-debugging-port={args.debug_port}",
-            f"--user-data-dir={args.profile_dir.resolve()}",
-            "--no-first-run",
-            "--new-window",
-            url,
-        ],
+        command,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
     print(f"Opened Xiaohongshu in {browser}")
-    print("Ask the user to scan-code login in that browser, then confirm the note list is visible.")
+    if args.isolated_profile:
+        print(f"Using isolated browser profile: {args.profile_dir.resolve()}")
+    else:
+        profile = args.profile_directory or "the regular/default browser profile"
+        print(f"Using {profile}. If already logged in, Xiaohongshu should reuse that session.")
+    print("Ask the user to confirm Xiaohongshu is logged in and the note list is visible.")
     return 0
 
 
